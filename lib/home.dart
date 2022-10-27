@@ -20,7 +20,7 @@
 //             ],
 //           ),
 //         ),
-        
+
 //         bottomNavigationBar: BottomNavbar(),
 //         );
 //   }
@@ -28,7 +28,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:spark/Maps/Maps.dart';
-
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -38,20 +37,55 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     Scaffold(
-      body: MapScreen(),
+      body: Stack(children: <Widget>[
+        MapScreen(),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: Color.fromRGBO(144, 202, 249, 1),
+              child: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 0,
+          right: 70,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: Color.fromRGBO(144, 202, 249, 1),
+              child: Icon(
+                Icons.notifications,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ]),
     ),
     Text(
-      'Index 2: School',
+      'Index 2: Bookmark',
       style: optionStyle,
     ),
     Text(
-      'Index 3: Settings',
+      'Index 3: Booking',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 3: Profile',
       style: optionStyle,
     ),
   ];
@@ -71,32 +105,48 @@ class _HomeState extends State<Home> {
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.red,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+          boxShadow: [
+            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-            backgroundColor: Colors.green,
+          child: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+                backgroundColor: Colors.white,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.bookmark),
+                label: 'Saved',
+                backgroundColor: Colors.white,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.library_books),
+                label: 'Booking',
+                backgroundColor: Colors.white,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
+                backgroundColor: Colors.white,
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            unselectedItemColor: Colors.grey,
+            selectedItemColor: Color.fromRGBO(144, 202, 249, 1),
+            onTap: _onItemTapped,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-            backgroundColor: Colors.purple,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-            backgroundColor: Colors.pink,
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        ),
       ),
     );
   }
